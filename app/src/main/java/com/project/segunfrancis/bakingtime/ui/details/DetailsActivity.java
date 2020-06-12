@@ -1,4 +1,4 @@
-package com.project.segunfrancis.bakingtime.ui;
+package com.project.segunfrancis.bakingtime.ui.details;
 
 import androidx.appcompat.app.AppCompatActivity;
 
