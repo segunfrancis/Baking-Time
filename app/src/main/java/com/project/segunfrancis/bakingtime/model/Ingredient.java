@@ -2,10 +2,12 @@ package com.project.segunfrancis.bakingtime.model;
 
 import com.squareup.moshi.Json;
 
+import java.io.Serializable;
+
 /**
  * Created by SegunFrancis
  */
-public class Ingredient {
+public class Ingredient implements Serializable {
 
     @Json(name = "quantity")
     private double quantity;

@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnI
 
     @Override
     public void onItemClick(Recipe recipe) {
-        startActivity(new Intent(MainActivity.this, DetailsActivity.class).putExtra(INTENT_KEY, recipe));
+        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+        intent.putExtra(INTENT_KEY, recipe);
+        startActivity(intent);
     }
 
     private void displaySnackBar(String message) {

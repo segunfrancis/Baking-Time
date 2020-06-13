@@ -6,10 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="snackbarStyle">@style/customSnackBarStyle</item>
-    </style>
-
-    <style name="customSnackBarStyle">
         <item name="snackbarStyle">@style/Widget.Design.Snackbar</item>
     </style>
 </resources>
