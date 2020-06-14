@@ -2,6 +2,8 @@ package com.project.segunfrancis.bakingtime.ui.details;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.project.segunfrancis.bakingtime.R;
@@ -20,6 +21,7 @@ import com.project.segunfrancis.bakingtime.ui.steps.StepDetailsActivity;
 import com.project.segunfrancis.bakingtime.util.StepAdapter;
 
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY;
+import static com.project.segunfrancis.bakingtime.util.AppConstants.isTablet;
 
 public class DetailsActivity extends AppCompatActivity implements StepAdapter.OnStepItemClickListener {
 
@@ -28,17 +30,33 @@ public class DetailsActivity extends AppCompatActivity implements StepAdapter.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
-        Intent intent = getIntent();
-        Recipe recipe = (Recipe) intent.getSerializableExtra(INTENT_KEY);
-        if (recipe != null) {
-            setUpStepAdapter(recipe);
-            mBinding.setRecipe(recipe);
-            if (getSupportActionBar() != null)
-                getSupportActionBar().setTitle(recipe.getName());
-        }
-        mBinding.ingredients.setOnClickListener(v -> toggleArrow(mBinding.detailsRecyclerView, mBinding.ingredients));
-        mBinding.steps.setOnClickListener(v -> toggleArrow(mBinding.stepsRecyclerView, mBinding.steps));
+        setContentView(R.layout.activity_details);
+        /*if (!isTablet(this)) {
+            //mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
+            Intent intent = getIntent();
+            Recipe recipe = (Recipe) intent.getSerializableExtra(INTENT_KEY);
+            if (recipe != null) {
+                setUpStepAdapter(recipe);
+                mBinding.setRecipe(recipe);
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setTitle(recipe.getName());
+            }
+            mBinding.ingredients.setOnClickListener(v -> toggleArrow(mBinding.detailsRecyclerView, mBinding.ingredients));
+            mBinding.steps.setOnClickListener(v -> toggleArrow(mBinding.stepsRecyclerView, mBinding.steps));
+        } else {
+            Intent intent = getIntent();
+            Recipe recipe = (Recipe) intent.getSerializableExtra(INTENT_KEY);
+            DetailsFragment fragment = new DetailsFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(INTENT_KEY, recipe);
+            fragment.setArguments(bundle);
+
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction()
+                    .add(R.id.details_fragment_container, fragment)
+                    .commit();
+        }*/
     }
 
     private void setUpStepAdapter(Recipe recipe) {
