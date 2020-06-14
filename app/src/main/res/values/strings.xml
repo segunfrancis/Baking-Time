@@ -5,4 +5,6 @@
     <string name="arrow_image">arrow image that signifies the state of the ingredients</string>
     <string name="no_video_available">Image that displays when no video url is available</string>
     <string name="recipe_image">recipe image</string>
+    <string name="steps">Steps</string>
+    <string name="recipe_thumbnail_image">Recipe thumbnail image</string>
 </resources>

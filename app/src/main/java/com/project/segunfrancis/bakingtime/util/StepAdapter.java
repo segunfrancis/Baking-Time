@@ -3,8 +3,10 @@ package com.project.segunfrancis.bakingtime.util;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.project.segunfrancis.bakingtime.R;
 import com.project.segunfrancis.bakingtime.model.Step;
 
@@ -37,8 +39,12 @@ public class StepAdapter extends
         }
 
         void bind(Step step, OnStepItemClickListener listener) {
-            ConstraintLayout rootLayout = itemView.findViewById(R.id.step_constraintLayout);
             TextView stepText = itemView.findViewById(R.id.step_textView);
+            ImageView thumbnail = itemView.findViewById(R.id.thumbnail_imageView);
+            Glide.with(thumbnail.getContext()).load(step.getThumbnailURL())
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.recipe_image)
+                    .into(thumbnail);
             stepText.setText(step.getShortDescription());
             stepText.setOnClickListener(v -> listener.onStepItemClick(step));
         }
@@ -50,7 +56,6 @@ public class StepAdapter extends
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return new ViewHolder(inflater.inflate(R.layout.item_layout_steps, parent, false));
     }
-
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {

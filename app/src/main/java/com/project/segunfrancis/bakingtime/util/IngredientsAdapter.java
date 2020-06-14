@@ -10,7 +10,6 @@ import com.project.segunfrancis.bakingtime.model.Ingredient;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,7 +48,6 @@ public class IngredientsAdapter extends
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return new ViewHolder(inflater.inflate(R.layout.item_ingredient_layout, parent, false));
     }
-
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {

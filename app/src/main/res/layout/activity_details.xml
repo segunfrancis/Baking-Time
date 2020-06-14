@@ -12,60 +12,76 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.details.DetailsActivity"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            tools:context=".ui.details.DetailsActivity">
 
-            <TextView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/ingredients"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:insetBottom="0dp"
                 android:padding="16dp"
                 android:text="@string/recipe_ingredients"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="28sp"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground"
+                app:cornerRadius="0dp"
+                app:icon="@drawable/ic_arrow_downward_black_24dp"
+                app:iconGravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/arrow_image"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:padding="8dp"
-                android:contentDescription="@string/arrow_image"
-                android:src="@drawable/ic_arrow_downward_black_24dp"
-                app:layout_constraintBottom_toBottomOf="@id/ingredients"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ingredients" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/details_recyclerView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_ingredient_layout"
                 android:visibility="gone"
-                app:loadIngredients="@{recipe.ingredients}"
-                app:layout_constraintBottom_toTopOf="@id/steps_recyclerView"
+                app:layout_constraintBottom_toTopOf="@id/steps"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ingredients" />
+                app:layout_constraintTop_toBottomOf="@id/ingredients"
+                app:loadIngredients="@{recipe.ingredients}"
+                tools:listitem="@layout/item_ingredient_layout" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/steps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="16dp"
+                android:text="@string/steps"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="28sp"
+                app:cornerRadius="0dp"
+                android:layout_marginTop="8dp"
+                app:icon="@drawable/ic_arrow_downward_black_24dp"
+                app:iconGravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_recyclerView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/steps_recyclerView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_layout_steps"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/details_recyclerView" />
+                app:layout_constraintTop_toBottomOf="@id/steps"
+                tools:listitem="@layout/item_layout_steps" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

@@ -9,16 +9,28 @@
     <TextView
         android:id="@+id/step_textView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/thumbnail_imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/thumbnail_imageView"
+        app:layout_constraintTop_toTopOf="@id/thumbnail_imageView"
         tools:text="Recipe Introduction" />
+
+    <ImageView
+        android:id="@+id/thumbnail_imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        tools:src="@drawable/recipe_image"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/recipe_thumbnail_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

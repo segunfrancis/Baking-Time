@@ -29,6 +29,6 @@ public final class BindingAdapters {
         IngredientsAdapter adapter = new IngredientsAdapter(ingredients);
         view.setAdapter(adapter);
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        view.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.HORIZONTAL));
+        view.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
     }
 }

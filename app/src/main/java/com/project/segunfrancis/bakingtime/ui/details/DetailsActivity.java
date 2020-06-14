@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.project.segunfrancis.bakingtime.R;
 import com.project.segunfrancis.bakingtime.databinding.ActivityDetailsBinding;
 import com.project.segunfrancis.bakingtime.model.Recipe;
@@ -32,32 +34,32 @@ public class DetailsActivity extends AppCompatActivity implements StepAdapter.On
         if (recipe != null) {
             setUpStepAdapter(recipe);
             mBinding.setRecipe(recipe);
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle(recipe.getName());
         }
-        mBinding.ingredients.setOnClickListener(v -> {
-            toggleArrow();
-        });
+        mBinding.ingredients.setOnClickListener(v -> toggleArrow(mBinding.detailsRecyclerView, mBinding.ingredients));
+        mBinding.steps.setOnClickListener(v -> toggleArrow(mBinding.stepsRecyclerView, mBinding.steps));
     }
 
     private void setUpStepAdapter(Recipe recipe) {
         StepAdapter adapter = new StepAdapter(recipe.getSteps(), this);
         mBinding.stepsRecyclerView.setAdapter(adapter);
         mBinding.stepsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.stepsRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
+        mBinding.stepsRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
-    private void toggleArrow() {
-        if (mBinding.detailsRecyclerView.getVisibility() == View.VISIBLE) {
-            mBinding.detailsRecyclerView.setVisibility(View.GONE);
-            mBinding.arrowImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_downward_black_24dp));
+    private void toggleArrow(RecyclerView recyclerView, MaterialButton button) {
+        if (recyclerView.getVisibility() == View.VISIBLE) {
+            recyclerView.setVisibility(View.GONE);
+            button.setIcon(getResources().getDrawable(R.drawable.ic_arrow_downward_black_24dp));
         } else {
-            mBinding.detailsRecyclerView.setVisibility(View.VISIBLE);
-            mBinding.arrowImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_upward_black_24dp));
+            recyclerView.setVisibility(View.VISIBLE);
+            button.setIcon(getResources().getDrawable(R.drawable.ic_arrow_upward_black_24dp));
         }
     }
 
     @Override
     public void onStepItemClick(Step step) {
-        Toast.makeText(this, "ID: " + step.getId(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(DetailsActivity.this, StepDetailsActivity.class);
         intent.putExtra(INTENT_KEY, step);
         startActivity(intent);
