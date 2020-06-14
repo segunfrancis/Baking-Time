@@ -14,10 +14,21 @@
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:name="com.project.segunfrancis.bakingtime.ui.details.DetailsFragment"
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/video_frame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:id="@+id/description_frame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

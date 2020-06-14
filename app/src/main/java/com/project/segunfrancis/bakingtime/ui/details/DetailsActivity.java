@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.project.segunfrancis.bakingtime.R;
 import com.project.segunfrancis.bakingtime.databinding.ActivityDetailsBinding;
@@ -18,7 +19,7 @@ import com.project.segunfrancis.bakingtime.util.StepAdapter;
 
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY;
 
-public class DetailsActivity extends AppCompatActivity implements StepAdapter.OnItemClickListener {
+public class DetailsActivity extends AppCompatActivity implements StepAdapter.OnStepItemClickListener {
 
     private ActivityDetailsBinding mBinding;
 
@@ -28,8 +29,10 @@ public class DetailsActivity extends AppCompatActivity implements StepAdapter.On
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
         Intent intent = getIntent();
         Recipe recipe = (Recipe) intent.getSerializableExtra(INTENT_KEY);
-        setUpStepAdapter(recipe);
-        mBinding.setRecipe(recipe);
+        if (recipe != null) {
+            setUpStepAdapter(recipe);
+            mBinding.setRecipe(recipe);
+        }
         mBinding.ingredients.setOnClickListener(v -> {
             toggleArrow();
         });
@@ -53,7 +56,8 @@ public class DetailsActivity extends AppCompatActivity implements StepAdapter.On
     }
 
     @Override
-    public void onItemClick(Step step) {
+    public void onStepItemClick(Step step) {
+        Toast.makeText(this, "ID: " + step.getId(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(DetailsActivity.this, StepDetailsActivity.class);
         intent.putExtra(INTENT_KEY, step);
         startActivity(intent);

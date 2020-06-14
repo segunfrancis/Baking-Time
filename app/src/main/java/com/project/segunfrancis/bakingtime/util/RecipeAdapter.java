@@ -3,8 +3,10 @@ package com.project.segunfrancis.bakingtime.util;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.project.segunfrancis.bakingtime.model.Recipe;
 
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.project.segunfrancis.bakingtime.R;
 
 /**
@@ -36,6 +39,12 @@ public class RecipeAdapter extends
         void bind(Recipe recipe, OnItemClickListener listener) {
             TextView textView = itemView.findViewById(R.id.recipe_name_textView);
             textView.setText(recipe.getName());
+            ImageView imageView = itemView.findViewById(R.id.recipe_imageView);
+            Glide.with(imageView.getContext())
+                    .load(recipe.getImage())
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.recipe_image)
+                    .into(imageView);
             itemView.setOnClickListener(v -> listener.onItemClick(recipe));
         }
     }
@@ -56,7 +65,10 @@ public class RecipeAdapter extends
 
     @Override
     public int getItemCount() {
-        return mRecipeList.size();
+        if (mRecipeList == null)
+            return 0;
+        else
+            return mRecipeList.size();
     }
 
     public interface OnItemClickListener {

@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -21,10 +22,10 @@ public class StepAdapter extends
         RecyclerView.Adapter<StepAdapter.ViewHolder> {
 
     private List<Step> steps;
-    private OnItemClickListener onItemClickListener;
+    private OnStepItemClickListener onItemClickListener;
 
     public StepAdapter(List<Step> steps,
-                       OnItemClickListener onItemClickListener) {
+                       OnStepItemClickListener onItemClickListener) {
         this.steps = steps;
         this.onItemClickListener = onItemClickListener;
     }
@@ -35,10 +36,11 @@ public class StepAdapter extends
             super(itemView);
         }
 
-        void bind(Step step, OnItemClickListener listener) {
+        void bind(Step step, OnStepItemClickListener listener) {
+            ConstraintLayout rootLayout = itemView.findViewById(R.id.step_constraintLayout);
             TextView stepText = itemView.findViewById(R.id.step_textView);
             stepText.setText(step.getShortDescription());
-            itemView.setOnClickListener(v -> listener.onItemClick(step));
+            stepText.setOnClickListener(v -> listener.onStepItemClick(step));
         }
     }
 
@@ -58,10 +60,13 @@ public class StepAdapter extends
 
     @Override
     public int getItemCount() {
-        return steps.size();
+        if (steps == null)
+            return 0;
+        else
+            return steps.size();
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(Step step);
+    public interface OnStepItemClickListener {
+        void onStepItemClick(Step step);
     }
 }
