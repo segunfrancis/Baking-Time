@@ -10,8 +10,8 @@ import com.project.segunfrancis.bakingtime.R;
 import com.project.segunfrancis.bakingtime.databinding.FragmentDetailsBinding;
 import com.project.segunfrancis.bakingtime.model.Step;
 import com.project.segunfrancis.bakingtime.ui.SharedViewModel;
-import com.project.segunfrancis.bakingtime.util.IngredientsAdapter;
-import com.project.segunfrancis.bakingtime.util.StepAdapter;
+import com.project.segunfrancis.bakingtime.ui.adapters.IngredientsAdapter;
+import com.project.segunfrancis.bakingtime.ui.adapters.StepAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -1,6 +1,7 @@
 package com.project.segunfrancis.bakingtime.util;
 
 import com.project.segunfrancis.bakingtime.model.Ingredient;
+import com.project.segunfrancis.bakingtime.ui.adapters.IngredientsAdapter;
 
 import java.util.List;
 

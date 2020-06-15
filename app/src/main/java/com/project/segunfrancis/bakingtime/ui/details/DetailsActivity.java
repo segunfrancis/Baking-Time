@@ -18,7 +18,7 @@ import com.project.segunfrancis.bakingtime.model.Recipe;
 import com.project.segunfrancis.bakingtime.model.Step;
 import com.project.segunfrancis.bakingtime.ui.SharedViewModel;
 import com.project.segunfrancis.bakingtime.ui.steps.StepDetailsActivity;
-import com.project.segunfrancis.bakingtime.util.StepAdapter;
+import com.project.segunfrancis.bakingtime.ui.adapters.StepAdapter;
 
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY;
 import static com.project.segunfrancis.bakingtime.util.AppConstants.isTablet;

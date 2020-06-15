@@ -1,4 +1,4 @@
-package com.project.segunfrancis.bakingtime.util;
+package com.project.segunfrancis.bakingtime.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**

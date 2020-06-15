@@ -1,4 +1,4 @@
-package com.project.segunfrancis.bakingtime.util;
+package com.project.segunfrancis.bakingtime.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
