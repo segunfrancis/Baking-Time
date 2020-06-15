@@ -22,9 +22,9 @@ import retrofit2.Response;
  */
 public class MainViewModel extends ViewModel {
 
-    public MutableLiveData<List<Recipe>> recipeList = new MutableLiveData<>();
-    public MutableLiveData<String> message = new MutableLiveData<>();
-    public MutableLiveData<State> state = new MutableLiveData<>();
+    MutableLiveData<List<Recipe>> recipeList = new MutableLiveData<>();
+    MutableLiveData<String> message = new MutableLiveData<>();
+    MutableLiveData<State> state = new MutableLiveData<>();
 
     public MainViewModel() {
         getRecipes();
@@ -49,5 +49,9 @@ public class MainViewModel extends ViewModel {
                 Log.e("MainResponse", t.getLocalizedMessage());
             }
         });
+    }
+
+    void loadRecipes() {
+        getRecipes();
     }
 }

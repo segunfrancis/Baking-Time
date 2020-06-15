@@ -16,6 +16,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".ui.details.DetailsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".ui.main.MainActivity" />
         <activity
             android:name=".ui.main.MainActivity"

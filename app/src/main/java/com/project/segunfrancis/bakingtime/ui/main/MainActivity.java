@@ -32,20 +32,29 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnI
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mBinding.setLifecycleOwner(this);
-        mBinding.setViewModel(mViewModel);
 
         mViewModel.message.observe(this, this::displaySnackBar);
         mViewModel.recipeList.observe(this, recipes -> {
             RecipeAdapter adapter = new RecipeAdapter(recipes, MainActivity.this);
             mBinding.recipeRecyclerView.setAdapter(adapter);
-            if (isTablet(MainActivity.this)) {
-                mBinding.recipeRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
-                mBinding.recipeRecyclerView.addItemDecoration(new MarginItemDecorationTablet(16));
-            } else {
-                mBinding.recipeRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                mBinding.recipeRecyclerView.addItemDecoration(new MarginItemDecoration(16));
+        });
+        mViewModel.state.observe(this, state -> {
+            switch (state) {
+                case LOADING: mBinding.mainSwipeRefreshLayout.setRefreshing(true);
+                case SUCCESS: mBinding.mainSwipeRefreshLayout.setRefreshing(false);
+                case ERROR: mBinding.mainSwipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        mBinding.mainSwipeRefreshLayout.setOnRefreshListener(() -> mViewModel.loadRecipes());
+
+        if (isTablet(MainActivity.this)) {
+            mBinding.recipeRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
+            mBinding.recipeRecyclerView.addItemDecoration(new MarginItemDecorationTablet(16));
+        } else {
+            mBinding.recipeRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+            mBinding.recipeRecyclerView.addItemDecoration(new MarginItemDecoration(16));
+        }
     }
 
     @Override
@@ -56,6 +65,6 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnI
     }
 
     private void displaySnackBar(String message) {
-        Snackbar.make(mBinding.mainConstraintLayout, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mBinding.mainSwipeRefreshLayout, message, Snackbar.LENGTH_LONG).show();
     }
 }

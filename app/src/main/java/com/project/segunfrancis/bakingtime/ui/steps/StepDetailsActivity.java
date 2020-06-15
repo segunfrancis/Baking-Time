@@ -1,7 +1,6 @@
 package com.project.segunfrancis.bakingtime.ui.steps;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.res.Configuration;
@@ -20,9 +19,9 @@ import com.project.segunfrancis.bakingtime.databinding.ActivityStepDetailsBindin
 import com.project.segunfrancis.bakingtime.model.Step;
 
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY;
+import static com.project.segunfrancis.bakingtime.util.AppConstants.USER_AGENT;
 import static com.project.segunfrancis.bakingtime.util.AppConstants.currentWindow;
 import static com.project.segunfrancis.bakingtime.util.AppConstants.playWhenReady;
-import static com.project.segunfrancis.bakingtime.util.AppConstants.hideSystemUi;
 import static com.project.segunfrancis.bakingtime.util.AppConstants.playbackPosition;
 
 public class StepDetailsActivity extends AppCompatActivity {
@@ -73,7 +72,7 @@ public class StepDetailsActivity extends AppCompatActivity {
     }
 
     private MediaSource buildMediaSource(Uri uri) {
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this, "bakingtime");
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this, USER_AGENT);
         return new ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri);
     }
 /*

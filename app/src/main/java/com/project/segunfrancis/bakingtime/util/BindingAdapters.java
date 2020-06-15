@@ -1,10 +1,5 @@
 package com.project.segunfrancis.bakingtime.util;
 
-
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.project.segunfrancis.bakingtime.model.Ingredient;
 
 import java.util.List;
@@ -18,11 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by SegunFrancis
  */
 public final class BindingAdapters {
-
-    @BindingAdapter("loadImage")
-    public static void loadImages(ImageView imageView, String imageUrl) {
-        Glide.with(imageView.getContext()).load(imageUrl).into(imageView);
-    }
 
     @BindingAdapter("loadIngredients")
     public static void loadIngredient(RecyclerView view, List<Ingredient> ingredients) {
