@@ -22,7 +22,7 @@ public class IngredientsAdapter extends
 
     private List<Ingredient> ingredients;
 
-    IngredientsAdapter(List<Ingredient> ingredients) {
+    public IngredientsAdapter(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
