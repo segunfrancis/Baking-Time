@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.project.segunfrancis.bakingtime">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,6 +12,7 @@
         <activity
             android:name=".ui.steps.StepDetailsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
+
         <activity
             android:name=".ui.details.DetailsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -27,6 +26,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".BakingTimeWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_time_widget_info" />
+        </receiver>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

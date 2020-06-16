@@ -8,4 +8,6 @@
     <string name="steps">Steps</string>
     <string name="recipe_thumbnail_image">Recipe thumbnail image</string>
     <string name="no_network">Check network connection</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
