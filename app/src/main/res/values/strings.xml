@@ -10,4 +10,5 @@
     <string name="no_network">Check network connection</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="update_recipe">Update Recipe on Widget</string>
 </resources>

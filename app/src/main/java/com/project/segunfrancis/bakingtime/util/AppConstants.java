@@ -14,6 +14,8 @@ import java.io.IOException;
 public final class AppConstants {
     public final static String BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
     public final static String INTENT_KEY = "com.project.segunfrancis.bakingtime_MAIN_INTENT_KEY";
+    public final static String INTENT_KEY_RECIPE_ID = "com.project.segunfrancis.bakingtime_recipe_id";
+    public final static String INTENT_ACTION_KEY = "intent_action_key";
     public final static String RECIPE_IMAGE_SRC = "https://unsplash.com/@brookelark";
     public final static String USER_AGENT = "bakingtime";
 
