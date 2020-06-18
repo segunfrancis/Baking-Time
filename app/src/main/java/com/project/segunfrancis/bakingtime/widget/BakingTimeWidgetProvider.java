@@ -15,7 +15,7 @@ import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY_R
 /**
  * Implementation of App Widget functionality.
  */
-public class BakingTimeWidget extends AppWidgetProvider {
+public class BakingTimeWidgetProvider extends AppWidgetProvider {
 
     private static RemoteViews getBakingGridRemoteViews(Context context) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_grid_view);
@@ -40,20 +40,6 @@ public class BakingTimeWidget extends AppWidgetProvider {
         remoteViews.setTextViewText(R.id.widget_recipe_name, recipe.getName());
         remoteViews.setOnClickPendingIntent(R.id.widget_recipe_name, pendingIntent);
 
-        /*RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_item);
-        StringBuilder builder = new StringBuilder();
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            String quantity = String.valueOf(ingredient.getQuantity());
-            String measure = ingredient.getMeasure();
-            String ingredientName = ingredient.getIngredient() + " ";
-            String quantityMeasure = quantity + " " + measure + "\n\n";
-            builder.append(ingredientName).append(quantityMeasure);
-        }*/
-        //views.setTextViewText(R.id.ingredient_name, builder.toString());
-        //remoteViews.addView(R.id.widget_listView, views);
-
-        // Instruct the widget manager to update the widget
-        //remoteViews = getBakingGridRemoteViews(context);
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
 

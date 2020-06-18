@@ -6,21 +6,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.Context;
 
-import com.project.segunfrancis.bakingtime.R;
-import com.project.segunfrancis.bakingtime.data_source.ApiService;
-import com.project.segunfrancis.bakingtime.data_source.RetrofitClient;
 import com.project.segunfrancis.bakingtime.model.Recipe;
-import com.project.segunfrancis.bakingtime.ui.details.DetailsActivity;
 import com.project.segunfrancis.bakingtime.ui.main.MainViewModel;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-
-import androidx.lifecycle.ViewModelProvider;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_ACTION_KEY;
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY;
@@ -54,7 +41,7 @@ public class BakingService extends IntentService {
 
     private void handleActionBakingWidgetUpdate(Recipe recipe) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingTimeWidget.class));
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingTimeWidgetProvider.class));
 
         // Trigger data update to handle the ListView
         //appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_listView);
@@ -65,7 +52,7 @@ public class BakingService extends IntentService {
     private void handleActionRequestCurrentData(int recipeId, Recipe recipe) {
         mViewModel = new MainViewModel();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingTimeWidget.class));
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingTimeWidgetProvider.class));
         /*ApiService service = RetrofitClient.getClient().create(ApiService.class);
         service.getRecipe().enqueue(new Callback<List<Recipe>>() {
             @Override
@@ -82,6 +69,6 @@ public class BakingService extends IntentService {
                 // TODO: handle error
             }
         });*/
-        BakingTimeWidget.updateIngredientWidget(BakingService.this, appWidgetManager, recipe, appWidgetIds);
+        BakingTimeWidgetProvider.updateIngredientWidget(BakingService.this, appWidgetManager, recipe, appWidgetIds);
     }
 }

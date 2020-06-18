@@ -39,8 +39,8 @@ class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     @Override
     public void onDataSetChanged() {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-        int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingTimeWidget.class));
-        BakingTimeWidget.updateIngredientWidget(mContext, appWidgetManager, mRecipe, ids);
+        int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingTimeWidgetProvider.class));
+        BakingTimeWidgetProvider.updateIngredientWidget(mContext, appWidgetManager, mRecipe, ids);
     }
 
     @Override
