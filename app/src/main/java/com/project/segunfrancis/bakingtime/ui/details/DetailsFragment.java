@@ -1,5 +1,6 @@
 package com.project.segunfrancis.bakingtime.ui.details;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,14 @@ import android.view.ViewGroup;
 import com.google.android.material.button.MaterialButton;
 import com.project.segunfrancis.bakingtime.R;
 import com.project.segunfrancis.bakingtime.databinding.FragmentDetailsBinding;
+import com.project.segunfrancis.bakingtime.model.Ingredient;
 import com.project.segunfrancis.bakingtime.model.Step;
 import com.project.segunfrancis.bakingtime.ui.SharedViewModel;
 import com.project.segunfrancis.bakingtime.ui.adapters.IngredientsAdapter;
 import com.project.segunfrancis.bakingtime.ui.adapters.StepAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,6 +63,16 @@ public class DetailsFragment extends Fragment implements StepAdapter.OnStepItemC
             stepRecyclerView.setAdapter(stepAdapter);
             stepRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
             stepRecyclerView.addItemDecoration(new DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL));
+
+            List<Ingredient> ingredients = recipe.getIngredients();
+            ArrayList<String> ingredientsForWidget = new ArrayList<>();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                ingredients.forEach((a) -> {
+                    ingredientsForWidget.add(a.getIngredient() + "\n" +
+                            "Quantity: " + a.getQuantity() + "\n" +
+                            "Measure: " + a.getMeasure() + "\n");
+                });
+            }
         });
     }
 

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,12 +19,16 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.project.segunfrancis.bakingtime.R;
 import com.project.segunfrancis.bakingtime.databinding.ActivityDetailsBinding;
+import com.project.segunfrancis.bakingtime.model.Ingredient;
 import com.project.segunfrancis.bakingtime.model.Recipe;
 import com.project.segunfrancis.bakingtime.model.Step;
 import com.project.segunfrancis.bakingtime.ui.SharedViewModel;
 import com.project.segunfrancis.bakingtime.ui.steps.StepDetailsActivity;
 import com.project.segunfrancis.bakingtime.ui.adapters.StepAdapter;
 import com.project.segunfrancis.bakingtime.widget.BakingService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY;
 import static com.project.segunfrancis.bakingtime.util.AppConstants.isTablet;
@@ -53,6 +58,18 @@ public class DetailsActivity extends AppCompatActivity implements StepAdapter.On
             mBinding.ingredients.setOnClickListener(v -> toggleArrow(mBinding.detailsRecyclerView, mBinding.ingredients));
             mBinding.steps.setOnClickListener(v -> toggleArrow(mBinding.stepsRecyclerView, mBinding.steps));
         }
+
+        List<Ingredient> ingredients = mRecipe.getIngredients();
+        ArrayList<String> ingredientsForWidget = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            ingredients.forEach((a) -> {
+                ingredientsForWidget.add(a.getIngredient() + "\n" +
+                        "Quantity: " + a.getQuantity() + "\n" +
+                        "Measure: " + a.getMeasure() + "\n");
+            });
+        }
+
+        BakingService.actionStartBakingService(this, ingredientsForWidget);
     }
 
     private void setUpStepAdapter(Recipe recipe) {
@@ -70,22 +87,6 @@ public class DetailsActivity extends AppCompatActivity implements StepAdapter.On
             recyclerView.setVisibility(View.VISIBLE);
             button.setIcon(getResources().getDrawable(R.drawable.ic_arrow_upward_black_24dp));
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_update_widget) {
-            BakingService.actionUpdateWidget(this, mRecipe, mRecipe.getId());
-            Snackbar.make(findViewById(R.id.details_constraintLayout), "Widget successfully updated", Snackbar.LENGTH_LONG).show();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

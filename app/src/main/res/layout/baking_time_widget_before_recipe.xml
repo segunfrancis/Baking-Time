@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_cake_24dp">
+    android:background="#09C">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:textStyle="bold|italic"
+        android:background="@color/colorAccent"
         android:text="@string/default_widget_text"/>
 </LinearLayout>

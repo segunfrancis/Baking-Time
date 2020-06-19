@@ -10,81 +10,76 @@ import android.widget.RemoteViewsService;
 import com.project.segunfrancis.bakingtime.R;
 import com.project.segunfrancis.bakingtime.model.Recipe;
 
+import java.util.List;
+
+import static com.project.segunfrancis.bakingtime.widget.BakingTimeWidgetProvider.ingredientsList;
+
 /**
  * Created by SegunFrancis
  */
 public class GridWidgetService extends RemoteViewsService {
+    List<String> remoteIngredientList;
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new GridRemoteViewsFactory((Recipe) intent.getSerializableExtra("to_be_implemented"), this.getApplicationContext());
-    }
-}
-
-class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-
-    private Recipe mRecipe;
-    private Context mContext;
-
-    public GridRemoteViewsFactory(Recipe recipe, Context context) {
-        mRecipe = recipe;
-        mContext = context;
+        return new GridRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 
-    @Override
-    public void onCreate() {
+    class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    }
+        private Context mContext;
 
-    @Override
-    public void onDataSetChanged() {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-        int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingTimeWidgetProvider.class));
-        BakingTimeWidgetProvider.updateIngredientWidget(mContext, appWidgetManager, mRecipe, ids);
-    }
+        public GridRemoteViewsFactory(Context context, Intent intent) {
+            mContext = context;
+        }
 
-    @Override
-    public void onDestroy() {
+        @Override
+        public void onCreate() {
 
-    }
+        }
 
-    @Override
-    public int getCount() {
-        if (mRecipe == null) return 0;
-        return mRecipe.getIngredients().size();
-    }
+        @Override
+        public void onDataSetChanged() {
+            remoteIngredientList = ingredientsList;
+        }
 
-    @Override
-    public RemoteViews getViewAt(int i) {
-        //String recipeName = mRecipe.getName();
-        String ingredientName = mRecipe.getIngredients().get(mRecipe.getId()).getIngredient();
-        String ingredientQuantity = String.valueOf(mRecipe.getIngredients().get(mRecipe.getId()).getQuantity());
-        String ingredientMeasure = mRecipe.getIngredients().get(mRecipe.getId()).getMeasure();
-        String ingredientDisplay = ingredientQuantity + " " + ingredientMeasure;
-        RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.baking_time_widget);
-        //remoteViews.setTextViewText(R.id.widget_recipe_name, recipeName);
-        remoteViews.setTextViewText(R.id.ingredient_name, ingredientName);
-        remoteViews.setTextViewText(R.id.ingredient_quantity, ingredientDisplay);
-        return remoteViews;
-    }
+        @Override
+        public void onDestroy() {
 
-    @Override
-    public RemoteViews getLoadingView() {
-        return null;
-    }
+        }
 
-    @Override
-    public int getViewTypeCount() {
-        return 1;
-    }
+        @Override
+        public int getCount() {
+            return remoteIngredientList.size();
+        }
 
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
+        @Override
+        public RemoteViews getViewAt(int position) {
+            RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
+            remoteViews.setTextViewText(R.id.widget_grid_view_item, remoteIngredientList.get(position));
+            Intent fillInIntent = new Intent();
+            remoteViews.setOnClickFillInIntent(R.id.widget_grid_view_item, fillInIntent);
+            return remoteViews;
+        }
 
-    @Override
-    public boolean hasStableIds() {
-        return false;
+        @Override
+        public RemoteViews getLoadingView() {
+            return null;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 1;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
     }
 }

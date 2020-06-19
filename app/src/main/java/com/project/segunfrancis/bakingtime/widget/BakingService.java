@@ -9,9 +9,13 @@ import android.content.Context;
 import com.project.segunfrancis.bakingtime.model.Recipe;
 import com.project.segunfrancis.bakingtime.ui.main.MainViewModel;
 
+import java.util.ArrayList;
+
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_ACTION_KEY;
+import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_FROM_ACTIVITY_INGREDIENTS_LIST;
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY;
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY_RECIPE_ID;
+import static com.project.segunfrancis.bakingtime.util.AppConstants.WIDGET_INTENT_KEY;
 
 public class BakingService extends IntentService {
 
@@ -21,54 +25,24 @@ public class BakingService extends IntentService {
         super("BakingService");
     }
 
-    public static void actionUpdateWidget(Context context, Recipe recipe, int recipeId) {
+    public static void actionStartBakingService(Context context, ArrayList<String> fromActivityIngredientList) {
         Intent intent = new Intent(context, BakingService.class);
-        intent.setAction(INTENT_ACTION_KEY);
-        intent.putExtra(INTENT_KEY, recipe);
-        intent.putExtra(INTENT_KEY_RECIPE_ID, recipeId);
+        intent.putExtra(INTENT_FROM_ACTIVITY_INGREDIENTS_LIST, fromActivityIngredientList);
         context.startService(intent);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
-            final String action = intent.getAction();
-            if (INTENT_ACTION_KEY.equals(action)) {
-                handleActionRequestCurrentData(intent.getIntExtra(INTENT_KEY_RECIPE_ID, 0), (Recipe) intent.getSerializableExtra(INTENT_KEY));
-            }
+            ArrayList<String> fromActivityIngredientList = intent.getExtras().getStringArrayList(INTENT_FROM_ACTIVITY_INGREDIENTS_LIST);
+            handleActionBakingWidgetUpdate(fromActivityIngredientList);
         }
     }
 
-    private void handleActionBakingWidgetUpdate(Recipe recipe) {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingTimeWidgetProvider.class));
-
-        // Trigger data update to handle the ListView
-        //appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_listView);
-        // Update all widgets
-        //BakingTimeWidget.updateIngredientWidget(this, appWidgetManager, recipe, appWidgetIds);
-    }
-
-    private void handleActionRequestCurrentData(int recipeId, Recipe recipe) {
-        mViewModel = new MainViewModel();
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingTimeWidgetProvider.class));
-        /*ApiService service = RetrofitClient.getClient().create(ApiService.class);
-        service.getRecipe().enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(@NotNull Call<List<Recipe>> call, @NotNull Response<List<Recipe>> response) {
-                Intent intent = new Intent(BakingService.this, DetailsActivity.class);
-                intent.putExtra("service_to_details_activity_intent", response.body().get(recipeId));
-                mViewModel.recipeList.postValue(response.body());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<List<Recipe>> call, @NotNull Throwable t) {
-                // TODO: handle error
-            }
-        });*/
-        BakingTimeWidgetProvider.updateIngredientWidget(BakingService.this, appWidgetManager, recipe, appWidgetIds);
+    private void handleActionBakingWidgetUpdate(ArrayList<String> fromActivityIngredientList) {
+        Intent intent = new Intent(WIDGET_INTENT_KEY);
+        intent.setAction(WIDGET_INTENT_KEY);
+        intent.putExtra(INTENT_FROM_ACTIVITY_INGREDIENTS_LIST, fromActivityIngredientList);
+        sendBroadcast(intent);
     }
 }
