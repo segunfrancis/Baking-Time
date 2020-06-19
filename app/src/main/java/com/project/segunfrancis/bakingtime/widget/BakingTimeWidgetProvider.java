@@ -27,14 +27,14 @@ public class BakingTimeWidgetProvider extends AppWidgetProvider {
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.baking_grid_view);
 
-        /*Intent intent = new Intent(context, DetailsActivity.class);
+        // Causes the app to crash
+        Intent intent = new Intent(context, DetailsActivity.class);
         intent.addCategory(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setPendingIntentTemplate(R.id.widget_grid_view, pendingIntent);
-*/
         Intent intent1 = new Intent(context, GridWidgetService.class);
         remoteViews.setRemoteAdapter(R.id.widget_grid_view, intent1);
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
@@ -43,6 +43,19 @@ public class BakingTimeWidgetProvider extends AppWidgetProvider {
     public static void updateBakingWidgets(Context context, AppWidgetManager appWidgetManager, int[] widgetIds) {
         for (int widgetId : widgetIds) {
             updateAppWidget(context, appWidgetManager, widgetId);
+        }
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingTimeWidgetProvider.class));
+        final String action = intent.getAction();
+        if (action.equals(WIDGET_INTENT_KEY)) {
+            ingredientsList = intent.getExtras().getStringArrayList(INTENT_FROM_ACTIVITY_INGREDIENTS_LIST);
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_grid_view);
+            BakingTimeWidgetProvider.updateBakingWidgets(context, appWidgetManager, appWidgetIds);
+            super.onReceive(context, intent);
         }
     }
 
@@ -59,18 +72,5 @@ public class BakingTimeWidgetProvider extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingTimeWidgetProvider.class));
-        final String action = intent.getAction();
-        if (action.equals(WIDGET_INTENT_KEY)) {
-            ingredientsList = intent.getExtras().getStringArrayList(INTENT_FROM_ACTIVITY_INGREDIENTS_LIST);
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_grid_view);
-            BakingTimeWidgetProvider.updateBakingWidgets(context, appWidgetManager, appWidgetIds);
-            super.onReceive(context, intent);
-        }
     }
 }

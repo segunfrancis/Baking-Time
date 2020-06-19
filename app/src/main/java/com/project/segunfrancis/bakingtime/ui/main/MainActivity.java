@@ -1,10 +1,14 @@
 package com.project.segunfrancis.bakingtime.ui.main;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.test.espresso.IdlingResource;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +16,7 @@ import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.project.segunfrancis.bakingtime.R;
+import com.project.segunfrancis.bakingtime.SimpleIdlingResource;
 import com.project.segunfrancis.bakingtime.databinding.ActivityMainBinding;
 import com.project.segunfrancis.bakingtime.model.Recipe;
 import com.project.segunfrancis.bakingtime.ui.details.DetailsActivity;
@@ -26,6 +31,18 @@ import static com.project.segunfrancis.bakingtime.util.AppConstants.isTablet;
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnItemClickListener {
 
     private ActivityMainBinding mBinding;
+
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
