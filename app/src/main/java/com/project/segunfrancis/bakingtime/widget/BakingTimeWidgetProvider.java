@@ -9,13 +9,11 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.project.segunfrancis.bakingtime.R;
-import com.project.segunfrancis.bakingtime.model.Recipe;
 import com.project.segunfrancis.bakingtime.ui.details.DetailsActivity;
 
 import java.util.ArrayList;
 
 import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_FROM_ACTIVITY_INGREDIENTS_LIST;
-import static com.project.segunfrancis.bakingtime.util.AppConstants.INTENT_KEY_RECIPE_ID;
 import static com.project.segunfrancis.bakingtime.util.AppConstants.WIDGET_INTENT_KEY;
 
 /**
@@ -29,14 +27,14 @@ public class BakingTimeWidgetProvider extends AppWidgetProvider {
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.baking_grid_view);
 
-        Intent intent = new Intent(context, DetailsActivity.class);
+        /*Intent intent = new Intent(context, DetailsActivity.class);
         intent.addCategory(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setPendingIntentTemplate(R.id.widget_grid_view, pendingIntent);
-
+*/
         Intent intent1 = new Intent(context, GridWidgetService.class);
         remoteViews.setRemoteAdapter(R.id.widget_grid_view, intent1);
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);

@@ -1,6 +1,5 @@
 package com.project.segunfrancis.bakingtime.ui.details;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,12 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.project.segunfrancis.bakingtime.R;
 import com.project.segunfrancis.bakingtime.databinding.ActivityDetailsBinding;
 import com.project.segunfrancis.bakingtime.model.Ingredient;
@@ -36,7 +32,6 @@ import static com.project.segunfrancis.bakingtime.util.AppConstants.isTablet;
 public class DetailsActivity extends AppCompatActivity implements StepAdapter.OnStepItemClickListener {
 
     private ActivityDetailsBinding mBinding;
-    private Recipe mRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +39,22 @@ public class DetailsActivity extends AppCompatActivity implements StepAdapter.On
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
 
         Intent intent = getIntent();
-        mRecipe = (Recipe) intent.getSerializableExtra(INTENT_KEY);
+        Recipe recipe = (Recipe) intent.getSerializableExtra(INTENT_KEY);
         SharedViewModel viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-        viewModel.setRecipeMutableLiveData(mRecipe);
+        viewModel.setRecipeMutableLiveData(recipe);
 
         if (!isTablet(this)) {
-            if (mRecipe != null) {
-                setUpStepAdapter(mRecipe);
-                mBinding.setRecipe(mRecipe);
+            if (recipe != null) {
+                setUpStepAdapter(recipe);
+                mBinding.setRecipe(recipe);
                 if (getSupportActionBar() != null)
-                    getSupportActionBar().setTitle(mRecipe.getName());
+                    getSupportActionBar().setTitle(recipe.getName());
             }
             mBinding.ingredients.setOnClickListener(v -> toggleArrow(mBinding.detailsRecyclerView, mBinding.ingredients));
             mBinding.steps.setOnClickListener(v -> toggleArrow(mBinding.stepsRecyclerView, mBinding.steps));
         }
 
-        List<Ingredient> ingredients = mRecipe.getIngredients();
+        List<Ingredient> ingredients = recipe.getIngredients();
         ArrayList<String> ingredientsForWidget = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             ingredients.forEach((a) -> {

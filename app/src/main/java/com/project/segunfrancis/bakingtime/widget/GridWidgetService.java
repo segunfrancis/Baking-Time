@@ -1,14 +1,11 @@
 package com.project.segunfrancis.bakingtime.widget;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.project.segunfrancis.bakingtime.R;
-import com.project.segunfrancis.bakingtime.model.Recipe;
 
 import java.util.List;
 
