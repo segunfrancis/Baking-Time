@@ -11,14 +11,13 @@
 
         <ImageView
             android:id="@+id/recipe_imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
             android:contentDescription="@string/recipe_image"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/recipe_name_textView"
             tools:src="@drawable/no_video" />
 
         <TextView
@@ -27,11 +26,11 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textSize="24sp"
+            android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/recipe_imageView"
-            app:layout_constraintTop_toTopOf="@+id/recipe_imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recipe_imageView"
             tools:text="Stone cold" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

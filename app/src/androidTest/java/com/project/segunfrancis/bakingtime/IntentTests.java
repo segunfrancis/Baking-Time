@@ -1,5 +1,9 @@
 package com.project.segunfrancis.bakingtime;
 
+import android.app.Activity;
+import android.app.Instrumentation;
+
+import com.project.segunfrancis.bakingtime.ui.details.DetailsActivity;
 import com.project.segunfrancis.bakingtime.ui.main.MainActivity;
 
 import org.junit.After;
@@ -13,21 +17,22 @@ import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.isInternal;
+import static org.hamcrest.Matchers.not;
 
 /**
  * Created by SegunFrancis
  */
 
 @RunWith(AndroidJUnit4.class)
-@LargeTest
-public class ActivityTests {
+public class IntentTests {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -40,16 +45,15 @@ public class ActivityTests {
         IdlingRegistry.getInstance().register(mIdlingResource);
     }
 
-    @Test
-    public void checkRecyclerViewItemTest() {
-        onView(ViewMatchers.withId(R.id.recipe_recyclerView)).perform(RecyclerViewActions.scrollToPosition(2));
+    @Before
+    public void stubAllExternalIntents() {
+        intending(not(isInternal())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
     }
 
     @Test
-    public void test_checkIfRecipeRecyclerViewIsVisible() {
-        onView(ViewMatchers.withId(R.id.recipe_recyclerView)).perform(RecyclerViewActions.scrollToPosition(1)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
-        //onView(ViewMatchers.withId(R.id.ingredients)).perform(click());
-        //onView(ViewMatchers.withId(R.id.details_recyclerView)).check(matches(isDisplayed()));
+    public void checkIntent_DetailsActivity() {
+        onView(ViewMatchers.withId(R.id.recipe_recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        intended(hasComponent(DetailsActivity.class.getName()));
     }
 
     @After

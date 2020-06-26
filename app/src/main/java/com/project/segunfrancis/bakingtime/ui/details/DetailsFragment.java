@@ -40,8 +40,6 @@ public class DetailsFragment extends Fragment implements StepAdapter.OnStepItemC
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         mBinding = FragmentDetailsBinding.inflate(inflater, container, false);
-        mBinding.ingredients.setOnClickListener(v -> toggleArrow(mBinding.detailsRecyclerView, mBinding.ingredients));
-        mBinding.steps.setOnClickListener(v -> toggleArrow(mBinding.stepsRecyclerView, mBinding.steps));
         return mBinding.getRoot();
     }
 
@@ -79,15 +77,5 @@ public class DetailsFragment extends Fragment implements StepAdapter.OnStepItemC
     @Override
     public void onStepItemClick(Step step) {
         mViewModel.setStepMutableLiveData(step);
-    }
-
-    private void toggleArrow(RecyclerView recyclerView, MaterialButton button) {
-        if (recyclerView.getVisibility() == View.VISIBLE) {
-            recyclerView.setVisibility(View.GONE);
-            button.setIcon(getResources().getDrawable(R.drawable.ic_arrow_downward_black_24dp));
-        } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            button.setIcon(getResources().getDrawable(R.drawable.ic_arrow_upward_black_24dp));
-        }
     }
 }

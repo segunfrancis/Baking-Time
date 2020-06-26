@@ -50,8 +50,6 @@ public class DetailsActivity extends AppCompatActivity implements StepAdapter.On
                 if (getSupportActionBar() != null)
                     getSupportActionBar().setTitle(recipe.getName());
             }
-            mBinding.ingredients.setOnClickListener(v -> toggleArrow(mBinding.detailsRecyclerView, mBinding.ingredients));
-            mBinding.steps.setOnClickListener(v -> toggleArrow(mBinding.stepsRecyclerView, mBinding.steps));
         }
 
         List<Ingredient> ingredients = recipe.getIngredients();
@@ -72,16 +70,6 @@ public class DetailsActivity extends AppCompatActivity implements StepAdapter.On
         mBinding.stepsRecyclerView.setAdapter(adapter);
         mBinding.stepsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBinding.stepsRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-    }
-
-    private void toggleArrow(RecyclerView recyclerView, MaterialButton button) {
-        if (recyclerView.getVisibility() == View.VISIBLE) {
-            recyclerView.setVisibility(View.GONE);
-            button.setIcon(getResources().getDrawable(R.drawable.ic_arrow_downward_black_24dp));
-        } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            button.setIcon(getResources().getDrawable(R.drawable.ic_arrow_upward_black_24dp));
-        }
     }
 
     @Override

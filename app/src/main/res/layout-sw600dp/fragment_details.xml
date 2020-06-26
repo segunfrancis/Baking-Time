@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical">
@@ -13,21 +14,15 @@
             android:layout_height="match_parent"
             android:animateLayoutChanges="true">
 
-            <com.google.android.material.button.MaterialButton
+            <TextView
                 android:id="@+id/ingredients"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:insetBottom="0dp"
                 android:padding="16dp"
+                android:gravity="center"
                 android:text="@string/recipe_ingredients"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="28sp"
-                app:cornerRadius="0dp"
-                app:icon="@drawable/ic_arrow_downward_black_24dp"
-                app:iconGravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -35,30 +30,27 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/details_recyclerView"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/recipe_recycler_height"
+                android:background="@drawable/recycler_view_background"
+                android:scrollbars="vertical"
+                android:layout_margin="@dimen/recipe_rcycler_view_margin"
                 app:layout_constraintBottom_toTopOf="@id/steps"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ingredients"
                 tools:listitem="@layout/item_ingredient_layout" />
 
-            <com.google.android.material.button.MaterialButton
+            <TextView
                 android:id="@+id/steps"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
                 android:padding="16dp"
                 android:text="@string/steps"
+                android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="28sp"
                 app:cornerRadius="0dp"
                 android:layout_marginTop="8dp"
-                app:icon="@drawable/ic_arrow_downward_black_24dp"
-                app:iconGravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/details_recyclerView" />
