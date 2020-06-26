@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnI
         MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mBinding.setLifecycleOwner(this);
 
-        if (isConnectionAvailable()) {
+//        if (isConnectionAvailable()) {
             viewModel.message.observe(this, this::displaySnackBar);
             viewModel.recipeList.observe(this, recipes -> {
                 RecipeAdapter adapter = new RecipeAdapter(recipes, MainActivity.this);
@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnI
                         mBinding.mainProgressBar.setVisibility(View.GONE);
                 }
             });
-        } else {
+        /*} else {
             mBinding.mainProgressBar.setVisibility(View.GONE);
             displaySnackBar(getResources().getString(R.string.no_network));
-        }
+        }*/
 
         if (isTablet(MainActivity.this)) {
             mBinding.recipeRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
