@@ -16,8 +16,8 @@ public final class AppConstants {
     public final static String INTENT_KEY = "com.project.segunfrancis.bakingtime_MAIN_INTENT_KEY";
     public final static String INTENT_KEY_RECIPE_ID = "com.project.segunfrancis.bakingtime_recipe_id";
     public final static String INTENT_ACTION_KEY = "intent_action_key";
-    public final static String WIDGET_INTENT_KEY = "android.appwidget.action.APPWIDGET_UPDATE";
-    public final static String INTENT_FROM_ACTIVITY_INGREDIENTS_LIST = "com.project.segunfrancis.bakingtime.INTENT_FROM_ACTIVITY_INGREDIENTS_LIST";
+    public final static String WIDGET_INTENT_KEY = "android.appwidget.action.APPWIDGET_UPDATE2";
+    public final static String INTENT_FROM_ACTIVITY_INGREDIENTS_LIST = "INTENT_FROM_ACTIVITY_INGREDIENTS_LIST";
     public final static String RECIPE_IMAGE_SRC = "https://unsplash.com/@brookelark";
     public final static String USER_AGENT = "bakingtime";
 

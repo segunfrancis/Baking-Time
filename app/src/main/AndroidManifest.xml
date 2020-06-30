@@ -29,9 +29,12 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".widget.BakingTimeWidgetProvider">
+        <receiver
+            android:name=".widget.BakingTimeWidgetProvider"
+            android:icon="@drawable/ic_logo_main">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE2" />
             </intent-filter>
 
             <meta-data

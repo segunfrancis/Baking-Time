@@ -33,11 +33,12 @@ public class BakingTimeWidgetProvider extends AppWidgetProvider {
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        /*PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setPendingIntentTemplate(R.id.widget_grid_view, pendingIntent);
         Intent intent1 = new Intent(context, GridWidgetService.class);
         remoteViews.setRemoteAdapter(R.id.widget_grid_view, intent1);
-        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);*/
+
     }
 
     public static void updateBakingWidgets(Context context, AppWidgetManager appWidgetManager, int[] widgetIds) {
@@ -51,17 +52,22 @@ public class BakingTimeWidgetProvider extends AppWidgetProvider {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingTimeWidgetProvider.class));
         final String action = intent.getAction();
-        if (action.equals(WIDGET_INTENT_KEY)) {
+        /*if (action.equals(WIDGET_INTENT_KEY)) {
             ingredientsList = intent.getExtras().getStringArrayList(INTENT_FROM_ACTIVITY_INGREDIENTS_LIST);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_grid_view);
             BakingTimeWidgetProvider.updateBakingWidgets(context, appWidgetManager, appWidgetIds);
             super.onReceive(context, intent);
-        }
+        }*/
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
+        for (int appwidgetId : appWidgetIds) {
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_grid_view);
+            Intent intent = new Intent(context, GridWidgetService.class);
+            views.setRemoteAdapter(R.id.widget_listView, intent);
+            appWidgetManager.updateAppWidget(appwidgetId, views);
+        }
     }
 
     @Override

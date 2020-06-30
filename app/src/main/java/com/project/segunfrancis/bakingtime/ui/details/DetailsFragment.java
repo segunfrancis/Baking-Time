@@ -1,19 +1,22 @@
 package com.project.segunfrancis.bakingtime.ui.details;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.button.MaterialButton;
 import com.project.segunfrancis.bakingtime.R;
+import com.project.segunfrancis.bakingtime.data_source.local.IngredientDao;
+import com.project.segunfrancis.bakingtime.data_source.local.IngredientExecutors;
+import com.project.segunfrancis.bakingtime.data_source.local.IngredientRoomDatabase;
 import com.project.segunfrancis.bakingtime.databinding.FragmentDetailsBinding;
 import com.project.segunfrancis.bakingtime.model.Ingredient;
+import com.project.segunfrancis.bakingtime.model.IngredientsForWidget;
 import com.project.segunfrancis.bakingtime.model.Step;
 import com.project.segunfrancis.bakingtime.ui.SharedViewModel;
 import com.project.segunfrancis.bakingtime.ui.adapters.IngredientsAdapter;
 import com.project.segunfrancis.bakingtime.ui.adapters.StepAdapter;
+import com.project.segunfrancis.bakingtime.widget.BakingService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,8 @@ public class DetailsFragment extends Fragment implements StepAdapter.OnStepItemC
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        IngredientRoomDatabase database = IngredientRoomDatabase.getDatabase(requireContext());
+        IngredientDao dao = database.mRecipeDao();
         RecyclerView ingredientRecyclerView = view.findViewById(R.id.details_recyclerView);
         RecyclerView stepRecyclerView = view.findViewById(R.id.steps_recyclerView);
         mViewModel.getRecipeMutableLiveData().observe(getViewLifecycleOwner(), recipe -> {
@@ -63,14 +68,18 @@ public class DetailsFragment extends Fragment implements StepAdapter.OnStepItemC
             stepRecyclerView.addItemDecoration(new DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL));
 
             List<Ingredient> ingredients = recipe.getIngredients();
-            ArrayList<String> ingredientsForWidget = new ArrayList<>();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                ingredients.forEach((a) -> {
-                    ingredientsForWidget.add(a.getIngredient() + "\n" +
-                            "Quantity: " + a.getQuantity() + "\n" +
-                            "Measure: " + a.getMeasure() + "\n");
-                });
+            List<String> ingredientsForWidget = new ArrayList<>();
+            for (Ingredient a : ingredients) {
+                ingredientsForWidget.add(a.getIngredient() + "\n" +
+                        "Quantity: " + a.getQuantity() + "\n" +
+                        "Measure: " + a.getMeasure() + "\n");
             }
+            IngredientExecutors.getInstance().diskIO().execute(() -> {
+                IngredientsForWidget forWidget = new IngredientsForWidget();
+                forWidget.setIngredients(ingredientsForWidget);
+                dao.insertIngredients(forWidget);
+            });
+            //BakingService.actionStartBakingService(requireContext(), ingredientsForWidget);
         });
     }
 

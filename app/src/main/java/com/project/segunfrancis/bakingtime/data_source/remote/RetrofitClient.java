@@ -1,4 +1,4 @@
-package com.project.segunfrancis.bakingtime.data_source;
+package com.project.segunfrancis.bakingtime.data_source.remote;
 
 import androidx.viewbinding.BuildConfig;
 import okhttp3.OkHttpClient;

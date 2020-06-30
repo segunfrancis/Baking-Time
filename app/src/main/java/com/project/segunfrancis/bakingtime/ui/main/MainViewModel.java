@@ -3,8 +3,8 @@ package com.project.segunfrancis.bakingtime.ui.main;
 import android.os.Looper;
 import android.util.Log;
 
-import com.project.segunfrancis.bakingtime.data_source.ApiService;
-import com.project.segunfrancis.bakingtime.data_source.RetrofitClient;
+import com.project.segunfrancis.bakingtime.data_source.remote.ApiService;
+import com.project.segunfrancis.bakingtime.data_source.remote.RetrofitClient;
 import com.project.segunfrancis.bakingtime.model.Recipe;
 import com.project.segunfrancis.bakingtime.util.State;
 

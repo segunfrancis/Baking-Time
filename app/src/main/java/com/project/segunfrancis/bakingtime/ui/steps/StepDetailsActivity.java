@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -15,6 +16,9 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.project.segunfrancis.bakingtime.R;
+import com.project.segunfrancis.bakingtime.data_source.local.IngredientDao;
+import com.project.segunfrancis.bakingtime.data_source.local.IngredientExecutors;
+import com.project.segunfrancis.bakingtime.data_source.local.IngredientRoomDatabase;
 import com.project.segunfrancis.bakingtime.databinding.ActivityStepDetailsBinding;
 import com.project.segunfrancis.bakingtime.model.Step;
 
@@ -37,6 +41,7 @@ public class StepDetailsActivity extends AppCompatActivity {
         mBinding.setStep(step);
         setLandscapeOrPortrait(step);
         initializePlayer();
+        getLocalData();
     }
 
     private void setLandscapeOrPortrait(Step step) {
@@ -123,5 +128,10 @@ public class StepDetailsActivity extends AppCompatActivity {
             mPlayer.release();
             mPlayer = null;
         }
+    }
+
+    private void getLocalData() {
+        IngredientDao dao = IngredientRoomDatabase.getDatabase(this).mRecipeDao();
+        Toast.makeText(this, dao.getIngredients().getIngredients().get(0), Toast.LENGTH_SHORT).show();
     }
 }

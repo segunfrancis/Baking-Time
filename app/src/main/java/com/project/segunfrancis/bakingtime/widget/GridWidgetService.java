@@ -6,7 +6,11 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.project.segunfrancis.bakingtime.R;
+import com.project.segunfrancis.bakingtime.data_source.local.IngredientDao;
+import com.project.segunfrancis.bakingtime.data_source.local.IngredientRoomDatabase;
+import com.project.segunfrancis.bakingtime.model.IngredientsForWidget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.project.segunfrancis.bakingtime.widget.BakingTimeWidgetProvider.ingredientsList;
@@ -15,7 +19,7 @@ import static com.project.segunfrancis.bakingtime.widget.BakingTimeWidgetProvide
  * Created by SegunFrancis
  */
 public class GridWidgetService extends RemoteViewsService {
-    List<String> remoteIngredientList;
+    List<String> remoteIngredientList = new ArrayList<>();
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -26,18 +30,21 @@ public class GridWidgetService extends RemoteViewsService {
 
         private Context mContext;
 
-        public GridRemoteViewsFactory(Context context, Intent intent) {
+        GridRemoteViewsFactory(Context context, Intent intent) {
             mContext = context;
         }
 
         @Override
         public void onCreate() {
-
+            IngredientDao dao = IngredientRoomDatabase.getDatabase(mContext).mRecipeDao();
+            remoteIngredientList = dao.getIngredients().getIngredients();
         }
 
         @Override
         public void onDataSetChanged() {
-            remoteIngredientList = ingredientsList;
+            IngredientDao dao = IngredientRoomDatabase.getDatabase(mContext).mRecipeDao();
+            remoteIngredientList = dao.getIngredients().getIngredients();
+            //remoteIngredientList = ingredientsList;
         }
 
         @Override
@@ -54,8 +61,8 @@ public class GridWidgetService extends RemoteViewsService {
         public RemoteViews getViewAt(int position) {
             RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
             remoteViews.setTextViewText(R.id.widget_grid_view_item, remoteIngredientList.get(position));
-            Intent fillInIntent = new Intent();
-            remoteViews.setOnClickFillInIntent(R.id.widget_grid_view_item, fillInIntent);
+//            Intent fillInIntent = new Intent();
+//            remoteViews.setOnClickFillInIntent(R.id.widget_grid_view_item, fillInIntent);
             return remoteViews;
         }
 
